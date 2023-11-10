@@ -9,8 +9,8 @@
   <body class="flex justify-center">
     
     <div id="error-message" class=" animate-bounce shadow hidden absolute h-10 w-fit p-2 bg-red-600 rounded top-10 font-bold text-white items-center justify-center">Input inválido!  </div>
-    <form class="flex flex-col w-screen h-screen justify-center items-center bg-gray-100">
-    <div class="bg-gray-400 h-[70%] w-[80%] md:w-[40%] md:h-[60%] rounded-lg flex flex-col justify-between items-center p-4">
+    <form method="post" class="flex flex-col w-screen h-screen justify-center items-center bg-gray-100">
+    <div class="bg-gray-400 h-[50%] w-[80%] md:w-[40%] md:h-[60%] rounded-lg flex flex-col justify-between items-center p-4">
       <div class="flex flex-row gap-1 w-full">
         <div class="shadow bg-white w-[80%] rounded-lg flex justify-end items-center p-4">
         <!-- Visor -->
@@ -60,8 +60,18 @@
       function PostResult() {
         event.preventDefault();
         if (CheckVisor(visor.value)) {;
+          if (visor.value.includes('.')) {
+            const decimalPlaces = visor.value.split('.')[1].length;
+            visor.value = eval(visor.value).toFixed(decimalPlaces);
+            document.forms[0].submit();
+
+          } else {
+            visor.value = eval(visor.value);
+            document.forms[0].submit();
+          }
         const result = eval(visor.value);
         visor.value = result;
+        document.forms[0].submit();
         }
       }  
 
