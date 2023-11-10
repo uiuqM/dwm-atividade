@@ -8,12 +8,12 @@ func sliceString(str string) ([]string){
 
 	for _, char := range str {
 		char := string(char)
-		if ((char != "+" || char != "-" || char != "/" || char != "*") && operator == "") {
-			number1 += char
-		} else if (char == "+" || char == "-" || char == "/" || char == "*"){
-			operator = char
-		} else if ((char != "+" || char != "-" || char != "/" || char != "*") && operator != "")  {
+		if (char == "+" || char == "-" || char == "/" || char == "*"){
+			operator += char
+		} else if ((char != "+" && char != "-" && char != "/" && char != "*") && operator != ""){
 			number2 += char
+		} else if ((char != "+" && char != "-" && char != "/" && char != "*") && operator == "")  {
+			number1 += char
 		}
 	}
 	slicedString := [] string {number1, number2, operator}

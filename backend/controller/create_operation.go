@@ -13,10 +13,9 @@ func (c *Controller) CreateOperation(w http.ResponseWriter, r *http.Request){
 		tmpl.ExecuteTemplate(w, "index.html", nil)
 		return
 	}
-	log.Print("teste")
-	input := r.FormValue("input")
+	r.ParseForm()
+	input := r.PostFormValue("input")
 	slicedString := sliceString(input)
-	log.Print("%s", input)
 
 	numberint, _ := strconv.Atoi(slicedString[0])
 	number1 := float64(numberint)
@@ -25,7 +24,6 @@ func (c *Controller) CreateOperation(w http.ResponseWriter, r *http.Request){
 	number2 := float64(numberint)
 
 	operator := slicedString[2]
-	log.Printf("%s %s %s", slicedString[0], slicedString[1], slicedString[2])
 
 	var result float64
 	if operator == "+" {

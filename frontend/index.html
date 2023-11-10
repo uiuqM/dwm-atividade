@@ -18,6 +18,7 @@
           onchange="CheckVisor(this.value)"
           type="text"
           id="visor"
+		  name="input"
           class="text-2xl font-bold w-full text-right outline-none"
           pattern="[0-9+\-*/]*"
           placeholder="0"
@@ -46,7 +47,7 @@
 
         <button onclick="ButtonTextClick('0')" type="button" class="shadow bg-gray-200 rounded p-2">0</button>
         <button onclick="ButtonTextClick('.')" type="button" class="shadow bg-gray-200 rounded p-2">.</button>
-        <button onclick="PostResult()" type="submit" class="bg-orange-500 rounded text-white p-2">=</button>
+        <button type="submit" class="bg-orange-500 rounded text-white p-2">=</button>
         <button onclick="ButtonTextClick('+')" type="button" class="shadow bg-gray-300 rounded p-2">+</button>
       </div>
     </div>
@@ -57,23 +58,25 @@
         const visor = document.getElementById('visor');
         const errorMessage = document.getElementById('error-message');
 
-      function PostResult() {
-        event.preventDefault();
-        if (CheckVisor(visor.value)) {;
-          if (visor.value.includes('.')) {
-            const decimalPlaces = visor.value.split('.')[1].length;
-            visor.value = eval(visor.value).toFixed(decimalPlaces);
-            document.forms[0].submit();
+      <!-- function PostResult() { -->
+      <!--   event.preventDefault(); -->
+      <!--   if (CheckVisor(visor.value)) {; -->
+      <!--     if (visor.value.includes('.')) { -->
+      <!--       const decimalPlaces = visor.value.split('.')[1].length; -->
+      <!--       visor.value = eval(visor.value).toFixed(decimalPlaces); -->
+      <!--       document.forms[0].submit(); -->
+			<!-- console.log("teste" + visor.value) -->
 
-          } else {
-            visor.value = eval(visor.value);
-            document.forms[0].submit();
-          }
-        const result = eval(visor.value);
-        visor.value = result;
-        document.forms[0].submit();
-        }
-      }  
+      <!--     } else { -->
+      <!--       visor.value = eval(visor.value); -->
+      <!--       document.forms[0].submit(); -->
+			<!-- console.log("teste" + visor.value) -->
+      <!--     } -->
+      <!--   const result = eval(visor.value); -->
+      <!--   visor.value = result; -->
+		<!-- console.log("teste") -->
+      <!--   } -->
+      <!-- } -->  
 
       function ButtonTextClick(char) {
         visor.value += char;
