@@ -3,8 +3,8 @@ package service
 import (
 	"database/sql"
 	"log"
-	"calculadora/domain"
-	"calculadora/repository"
+	"calculadora/backend/domain"
+	"calculadora/backend/repository"
 )
 
 type OperationService interface {

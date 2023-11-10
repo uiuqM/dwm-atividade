@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"calculadora/domain"
+	"calculadora/backend/domain"
 )
 
 func (c *Controller) CreateOperation(w http.ResponseWriter, r *http.Request){

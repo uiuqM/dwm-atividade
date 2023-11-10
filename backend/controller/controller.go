@@ -4,14 +4,14 @@ import (
 	"database/sql"
 	"html/template"
 	"net/http"
-	"calculadora/model"
-	"calculadora/service"
+	"calculadora/backend/model"
+	"calculadora/backend/service"
 )
 
 var tmpl *template.Template
 
 func init() {
-	tmpl = template.Must(template.ParseGlob("frontend/*.html"))
+	tmpl = template.Must(template.ParseGlob("../frontend/*.html"))
 }
 
 type Controller struct {

@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 	"log"
-	"calculadora/domain"
+	"calculadora/backend/domain"
 )
 
 type OperationQuery interface {

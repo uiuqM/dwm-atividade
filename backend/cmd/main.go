@@ -1,9 +1,9 @@
 package main
 
 import (
-	"calculadora/controller"
-	"calculadora/repository"
-	"calculadora/service"
+	"calculadora/backend/controller"
+	"calculadora/backend/repository"
+	"calculadora/backend/service"
 	"embed"
 	"log"
 	"net/http"
