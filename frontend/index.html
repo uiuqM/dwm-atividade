@@ -9,8 +9,8 @@
   <body class="flex justify-center">
     
     <div id="error-message" class=" animate-bounce shadow hidden absolute h-10 w-fit p-2 bg-red-600 rounded top-10 font-bold text-white items-center justify-center">Input inválido!  </div>
-    <div class="flex flex-col w-screen h-screen justify-center items-center bg-gray-100">
-    <div class="bg-gray-300 h-[70%] w-[80%] md:w-[40%] md:h-[60%] rounded-lg flex flex-col justify-between items-center p-4">
+    <form class="flex flex-col w-screen h-screen justify-center items-center bg-gray-100">
+    <div class="bg-gray-400 h-[70%] w-[80%] md:w-[40%] md:h-[60%] rounded-lg flex flex-col justify-between items-center p-4">
       <div class="flex flex-row gap-1 w-full">
         <div class="shadow bg-white w-[80%] rounded-lg flex justify-end items-center p-4">
         <!-- Visor -->
@@ -19,7 +19,7 @@
           type="text"
           id="visor"
           class="text-2xl font-bold w-full text-right outline-none"
-          pattern="[0-9\+\-\*\/\.]*"
+          pattern="[0-9+\-*/]*"
           placeholder="0"
         />
     </div>
@@ -29,32 +29,41 @@
       <div class="grid grid-cols-4 gap-2 w-full h-[70%] font-bold p-4">
 
         <!-- Botões da calculadora -->
-        <button onclick="ButtonTextClick('7')" class="shadow bg-gray-200 rounded p-2">7</button>
-        <button onclick="ButtonTextClick('8')" class="shadow bg-gray-200 rounded p-2">8</button>
-        <button onclick="ButtonTextClick('9')" class="shadow bg-gray-200 rounded p-2">9</button>
-        <button onclick="ButtonTextClick('/')" class="shadow bg-gray-200 rounded p-2">%</button>
+        <button onclick="ButtonTextClick('7')" type="button" class="shadow bg-gray-200 rounded p-2">7</button>
+        <button onclick="ButtonTextClick('8')" type="button" class="shadow bg-gray-200 rounded p-2">8</button>
+        <button onclick="ButtonTextClick('9')" type="button" class="shadow bg-gray-200 rounded p-2">9</button>
+        <button onclick="ButtonTextClick('/')" type="button" class="shadow bg-gray-300 rounded p-2">%</button>
 
-        <button onclick="ButtonTextClick('4')" class="shadow bg-gray-200 rounded p-2">4</button>
-        <button onclick="ButtonTextClick('5')" class="shadow bg-gray-200 rounded p-2">5</button>
-        <button onclick="ButtonTextClick('6')" class="shadow bg-gray-200 rounded p-2">6</button>
-        <button onclick="ButtonTextClick('*')" class="shadow bg-gray-200 rounded p-2">x</button>
+        <button onclick="ButtonTextClick('4')" type="button" class="shadow bg-gray-200 rounded p-2">4</button>
+        <button onclick="ButtonTextClick('5')" type="button" class="shadow bg-gray-200 rounded p-2">5</button>
+        <button onclick="ButtonTextClick('6')" type="button" class="shadow bg-gray-200 rounded p-2">6</button>
+        <button onclick="ButtonTextClick('*')" type="button" class="shadow bg-gray-300 rounded p-2">x</button>
 
-        <button onclick="ButtonTextClick('1')" class="shadow bg-gray-200 rounded p-2">1</button>
-        <button onclick="ButtonTextClick('2')" class="shadow bg-gray-200 rounded p-2">2</button>
-        <button onclick="ButtonTextClick('3')" class="shadow bg-gray-200 rounded p-2">3</button>
-        <button onclick="ButtonTextClick('-')" class="shadow bg-gray-200 rounded p-2">-</button>
+        <button onclick="ButtonTextClick('1')" type="button" class="shadow bg-gray-200 rounded p-2">1</button>
+        <button onclick="ButtonTextClick('2')" type="button" class="shadow bg-gray-200 rounded p-2">2</button>
+        <button onclick="ButtonTextClick('3')" type="button" class="shadow bg-gray-200 rounded p-2">3</button>
+        <button onclick="ButtonTextClick('-')" type="button" class="shadow bg-gray-300 rounded p-2">-</button>
 
-        <button onclick="ButtonTextClick('0')" class="shadow bg-gray-200 rounded p-2">0</button>
-        <button onclick="ButtonTextClick('.')" class="shadow bg-gray-200 rounded p-2">.</button>
-        <button class="bg-orange-500 rounded text-white p-2">=</button>
-        <button onclick="ButtonTextClick('+')" class="bg-gray-200 rounded p-2">+</button>
+        <button onclick="ButtonTextClick('0')" type="button" class="shadow bg-gray-200 rounded p-2">0</button>
+        <button onclick="ButtonTextClick('.')" type="button" class="shadow bg-gray-200 rounded p-2">.</button>
+        <button onclick="PostResult()" type="submit" class="bg-orange-500 rounded text-white p-2">=</button>
+        <button onclick="ButtonTextClick('+')" type="button" class="shadow bg-gray-300 rounded p-2">+</button>
       </div>
     </div>
-  </div>
+  </form>
   </body>
+
     <script>
         const visor = document.getElementById('visor');
         const errorMessage = document.getElementById('error-message');
+
+      function PostResult() {
+        event.preventDefault();
+        if (CheckVisor(visor.value)) {;
+        const result = eval(visor.value);
+        visor.value = result;
+        }
+      }  
 
       function ButtonTextClick(char) {
         visor.value += char;
@@ -66,12 +75,41 @@
       }
 
       function CheckVisor(value) {
-        const visor = document.getElementById('visor');
-        if (value === '8') {
-          errorMessage.style.display = 'block';
-        } else {
-          errorMessage.style.display = 'none'; // Volta para a cor padrão se houver valor
-        }
+  const errorMessage = document.getElementById('error-message');
+  const operators = ['+', '-', '*', '/'];
+
+  if (!/^[0-9+\-*/.]*$/.test(value)) {
+    errorMessage.style.display = 'block';
+    return false;
   }
+
+  for (let i = 0; i < operators.length; i++) {
+    const operator = operators[i];
+    const pattern = new RegExp(`\\${operator}{2,}`);
+    if (pattern.test(value)) {
+      errorMessage.style.display = 'block';
+      return false;
+    }
+  }
+
+  if (/^[+\-*/.]|[+\-*/.]$/.test(value)) {
+    errorMessage.style.display = 'block';
+    return false;
+  }
+
+  if (/[+\-*/.][.]/.test(value) || /[.][+\-*/.]/.test(value)) {
+    errorMessage.style.display = 'block';
+    return false;
+  }
+
+  if (/[.][.]/.test(value) || value.split('.').length > 3) {
+    errorMessage.style.display = 'block';
+    return false;
+  }
+
+  errorMessage.style.display = 'none';
+  return true;
+}
+
     </script>
 </html>

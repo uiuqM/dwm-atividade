@@ -2,8 +2,7 @@ package controller
 
 import (
 	"database/sql"
-	"net/http"
-	"calculadora/backend/domain"
+	"html/template"
 	"calculadora/backend/service"
 )
 
@@ -19,7 +18,7 @@ type Controller struct {
 }
 
 
-func NewController(operationService service.OperationService, *sql.DB) *Controller {
+func NewController(operationService service.OperationService, db *sql.DB) *Controller {
 	return &Controller{
 		operationService: operationService,
 		db: db,
