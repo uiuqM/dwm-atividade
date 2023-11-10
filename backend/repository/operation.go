@@ -17,9 +17,9 @@ func (o *operationQuery) CreateOperation (operation domain.Operation, db *sql.DB
 	var result float64
 
 	query := `INSERT INTO "operation"("numero1", "numero2", "operador", "resultado")
-	VALUES ($1, $2, $3) RETURNING id, resultado`
+	VALUES ($1, $2, $3, $4) RETURNING id, resultado`
 
-	err := db.QueryRow(query, operation.ID, operation.Number1, operation.Number2, operation.Operator, operation.Result).Scan(&operationID, &result)
+	err := db.QueryRow(query, operation.Number1, operation.Number2, operation.Operator, operation.Result).Scan(&operationID, &result)
 
 	operationInfo := domain.Operation{
 		ID: operationID,

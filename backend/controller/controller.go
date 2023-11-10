@@ -17,7 +17,6 @@ type Controller struct {
 	db *sql.DB
 }
 
-
 func NewController(operationService service.OperationService, db *sql.DB) *Controller {
 	return &Controller{
 		operationService: operationService,
