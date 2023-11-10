@@ -34,5 +34,4 @@ func main(){
 	mux.HandleFunc("/", c.CreateOperation)
 
 	http.ListenAndServe(":8080", context.ClearHandler(mux))
-
 }
