@@ -30,6 +30,7 @@ func main(){
 
 	var static embed.FS
 
-	mux.Handle("/static/", http.FileServer(http.FS(static)))
+	mux.Handle("frontend/", http.FileServer(http.FS(static)))
+	mux.HandleFunc("/", c.CreateOperation)
 
 }
