@@ -33,4 +33,5 @@ func main(){
 	mux.Handle("frontend/", http.FileServer(http.FS(static)))
 	mux.HandleFunc("/", c.CreateOperation)
 
+	http.ListenAndServe(":8080", context.ClearHandler(mux))
 }
