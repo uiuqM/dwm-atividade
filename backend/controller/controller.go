@@ -3,8 +3,6 @@ package controller
 import (
 	"database/sql"
 	"html/template"
-	"net/http"
-	"calculadora/backend/domain"
 	"calculadora/backend/service"
 )
 
