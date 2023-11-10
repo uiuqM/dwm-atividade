@@ -6,12 +6,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Calculadora</title>
   </head>
-  <body class="flex flex-col w-screen h-screen justify-center items-center bg-gray-100">
-    <div class="bg-gray-300 h-[70%] w-[80%] rounded-lg flex flex-col justify-between items-center p-4">
-      <div class="flex flex-row gap-1">
-        <div class="bg-white w-[80%] rounded-lg flex justify-end items-center p-4">
+  <body class="flex justify-center">
+    
+    <div id="error-message" class=" animate-bounce shadow hidden absolute h-10 w-fit p-2 bg-red-600 rounded top-10 font-bold text-white items-center justify-center">Input inválido!  </div>
+    <div class="flex flex-col w-screen h-screen justify-center items-center bg-gray-100">
+    <div class="bg-gray-300 h-[70%] w-[80%] md:w-[40%] md:h-[60%] rounded-lg flex flex-col justify-between items-center p-4">
+      <div class="flex flex-row gap-1 w-full">
+        <div class="shadow bg-white w-[80%] rounded-lg flex justify-end items-center p-4">
         <!-- Visor -->
         <input
+          onchange="CheckVisor(this.value)"
           type="text"
           id="visor"
           class="text-2xl font-bold w-full text-right outline-none"
@@ -19,36 +23,38 @@
           placeholder="0"
         />
     </div>
-    <button onclick="ClearVisor()" class="w-[20%] bg-red-500 rounded text-white p-2">C</button>
-</div>
+      <button onclick="ClearVisor()" class="w-[20%] shadow font-bold bg-red-500 rounded-lg text-white p-2">C</button>
+    </div>
 
       <div class="grid grid-cols-4 gap-2 w-full h-[70%] font-bold p-4">
 
         <!-- Botões da calculadora -->
-        <button onclick="ButtonTextClick('7')" class="bg-gray-200 rounded p-2">7</button>
-        <button onclick="ButtonTextClick('8')" class="bg-gray-200 rounded p-2">8</button>
-        <button onclick="ButtonTextClick('9')" class="bg-gray-200 rounded p-2">9</button>
-        <button onclick="ButtonTextClick('/')" class="bg-gray-200 rounded p-2">%</button>
+        <button onclick="ButtonTextClick('7')" class="shadow bg-gray-200 rounded p-2">7</button>
+        <button onclick="ButtonTextClick('8')" class="shadow bg-gray-200 rounded p-2">8</button>
+        <button onclick="ButtonTextClick('9')" class="shadow bg-gray-200 rounded p-2">9</button>
+        <button onclick="ButtonTextClick('/')" class="shadow bg-gray-200 rounded p-2">%</button>
 
-        <button onclick="ButtonTextClick('4')" class="bg-gray-200 rounded p-2">4</button>
-        <button onclick="ButtonTextClick('5')" class="bg-gray-200 rounded p-2">5</button>
-        <button onclick="ButtonTextClick('6')" class="bg-gray-200 rounded p-2">6</button>
-        <button onclick="ButtonTextClick('*')" class="bg-gray-200 rounded p-2">x</button>
+        <button onclick="ButtonTextClick('4')" class="shadow bg-gray-200 rounded p-2">4</button>
+        <button onclick="ButtonTextClick('5')" class="shadow bg-gray-200 rounded p-2">5</button>
+        <button onclick="ButtonTextClick('6')" class="shadow bg-gray-200 rounded p-2">6</button>
+        <button onclick="ButtonTextClick('*')" class="shadow bg-gray-200 rounded p-2">x</button>
 
-        <button onclick="ButtonTextClick('1')" class="bg-gray-200 rounded p-2">1</button>
-        <button onclick="ButtonTextClick('2')" class="bg-gray-200 rounded p-2">2</button>
-        <button onclick="ButtonTextClick('3')" class="bg-gray-200 rounded p-2">3</button>
-        <button onclick="ButtonTextClick('-')" class="bg-gray-200 rounded p-2">-</button>
+        <button onclick="ButtonTextClick('1')" class="shadow bg-gray-200 rounded p-2">1</button>
+        <button onclick="ButtonTextClick('2')" class="shadow bg-gray-200 rounded p-2">2</button>
+        <button onclick="ButtonTextClick('3')" class="shadow bg-gray-200 rounded p-2">3</button>
+        <button onclick="ButtonTextClick('-')" class="shadow bg-gray-200 rounded p-2">-</button>
 
-        <button onclick="ButtonTextClick('0')" class="bg-gray-200 rounded p-2">0</button>
-        <button onclick="ButtonTextClick('.')" class="bg-gray-200 rounded p-2">.</button>
+        <button onclick="ButtonTextClick('0')" class="shadow bg-gray-200 rounded p-2">0</button>
+        <button onclick="ButtonTextClick('.')" class="shadow bg-gray-200 rounded p-2">.</button>
         <button class="bg-orange-500 rounded text-white p-2">=</button>
         <button onclick="ButtonTextClick('+')" class="bg-gray-200 rounded p-2">+</button>
       </div>
     </div>
-
+  </div>
+  </body>
     <script>
-      const visor = document.getElementById('visor');
+        const visor = document.getElementById('visor');
+        const errorMessage = document.getElementById('error-message');
 
       function ButtonTextClick(char) {
         visor.value += char;
@@ -56,7 +62,16 @@
 
       function ClearVisor() {
         visor.value = '';
+        CheckVisor(visor.value);
       }
+
+      function CheckVisor(value) {
+        const visor = document.getElementById('visor');
+        if (value === '8') {
+          errorMessage.style.display = 'block';
+        } else {
+          errorMessage.style.display = 'none'; // Volta para a cor padrão se houver valor
+        }
+  }
     </script>
-  </body>
 </html>
