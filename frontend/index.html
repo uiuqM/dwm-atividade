@@ -52,6 +52,14 @@
       </div>
     </div>
   </form>
+<!-- Para renderizar a lista de operações: -->
+  {{ range $i, $o := .Operations }}
+	{{ $o.ID }} | {{ $o.Number1 }} {{ $o.Operator }} {{ $o.Number2 }} = {{ $o.Result}} | {{ $o.StringCreatedAt }} <br>
+  {{ end }}
+
+  <br><br>
+<!-- Para renderizar o resultado da última operação: -->
+  {{ .Result }}
   </body>
 
     <script>
