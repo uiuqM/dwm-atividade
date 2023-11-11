@@ -9,6 +9,7 @@ import (
 
 type OperationService interface {
 	CreateOperation (operation domain.Operation, db *sql.DB) (domain.Operation, error)
+	GetOperations (db *sql.DB) ([]domain.Operation, error) 
 }
 
 type operationService struct {
@@ -28,4 +29,14 @@ func (o *operationService) CreateOperation (operation domain.Operation, db *sql.
 	}
 
 	return operationInfo, nil
+}
+
+func (o *operationService) GetOperations (db *sql.DB) ([]domain.Operation, error) {
+	operations, err := o.dao.NewOperationQuery().GetOperations(db)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	return operations, nil
 }

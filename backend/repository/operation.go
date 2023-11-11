@@ -1,13 +1,15 @@
 package repository
 
 import (
+	"calculadora/backend/domain"
 	"database/sql"
 	"log"
-	"calculadora/backend/domain"
+	"time"
 )
 
 type OperationQuery interface {
 	CreateOperation (operation domain.Operation, db *sql.DB) (domain.Operation, error)
+	GetOperations (db *sql.DB) ([]domain.Operation, error) 
 }
 
 type operationQuery struct {}
@@ -32,6 +34,47 @@ func (o *operationQuery) CreateOperation (operation domain.Operation, db *sql.DB
 	}
 
 	return operationInfo, nil
+}
+
+func (o *operationQuery) GetOperations (db *sql.DB) ([]domain.Operation, error) {
+	query := `SELECT * FROM "operation" ORDER BY "dthora_calculo" DESC`
+
+	rows, err := db.Query(query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer rows.Close()
+
+	var operations []domain.Operation
+	var operation domain.Operation
+	var createdAt *time.Time
+
+	for rows.Next() {
+		err := rows.Scan(
+			&operation.ID,
+			&operation.Number1,
+			&operation.Number2,
+			&operation.Result,
+			&createdAt,
+			&operation.Operator,
+		)
+
+		operation.StringCreatedAt = createdAt.Format(time.RFC850)
+		
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		operations = append(operations, operation)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Fatal(err)
+	}
+
+	return operations, nil
 }
 
 

@@ -8,11 +8,34 @@ import (
 )
 
 func (c *Controller) CreateOperation(w http.ResponseWriter, r *http.Request){
-	if r.Method != "POST" {
-		log.Print("testando")
-		tmpl.ExecuteTemplate(w, "index.html", nil)
-		return
+	var operations []domain.Operation
+	operations, err := c.operationService.GetOperations(c.db)
+	log.Print(operations)
+
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	if r.Method == "POST" {
+		result := c.cleanData(r)
+
+		tmpl.ExecuteTemplate(w, "index.html", struct { 
+			Result float64
+			Operations []domain.Operation
+		} { 
+			Result: result, 
+			Operations: operations,
+		})
+	} else {
+		tmpl.ExecuteTemplate(w, "index.html", struct { 
+			Operations []domain.Operation
+		} { 
+			Operations: operations,
+		})
+	} 
+}
+
+func (c *Controller) cleanData(r *http.Request) float64 {
 	r.ParseForm()
 	input := r.PostFormValue("input")
 	slicedString := sliceString(input)
@@ -47,8 +70,7 @@ func (c *Controller) CreateOperation(w http.ResponseWriter, r *http.Request){
 
 	if err != nil {
 		log.Fatal(err)
-		return
 	}
-
-	tmpl.ExecuteTemplate(w, "index.html", struct { Result float64 } { Result: operation.Result })
+	 
+	return operation.Result
 }

@@ -9,4 +9,5 @@ type Operation struct {
 	Operator  string
 	Result    float64
 	CreatedAt *time.Time
+	StringCreatedAt string
 }
