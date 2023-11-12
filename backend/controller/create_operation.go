@@ -28,8 +28,10 @@ func (c *Controller) CreateOperation(w http.ResponseWriter, r *http.Request){
 		})
 	} else {
 		tmpl.ExecuteTemplate(w, "index.html", struct { 
+			Result string
 			Operations []domain.Operation
 		} { 
+			Result: "---",
 			Operations: operations,
 		})
 	} 
