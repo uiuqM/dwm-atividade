@@ -56,9 +56,9 @@ func (o *operationQuery) GetOperations (db *sql.DB) ([]domain.Operation, error) 
 			&operation.ID,
 			&operation.Number1,
 			&operation.Number2,
+			&operation.Operator,
 			&operation.Result,
 			&createdAt,
-			&operation.Operator,
 		)
 
 		operation.StringCreatedAt = createdAt.Format(time.RFC850)
