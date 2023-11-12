@@ -10,7 +10,7 @@
     
     <div id="error-message" class=" animate-bounce shadow hidden absolute h-10 w-fit p-2 bg-red-600 rounded top-10 font-bold text-white items-center justify-center">Input inválido!  </div>
     <form method="post" class="flex flex-col w-screen h-screen justify-center items-center bg-gray-100">
-    <div class="bg-gray-400 h-[50%] w-[80%] md:w-[40%] md:h-[60%] rounded-lg flex flex-col justify-between items-center p-4">
+    <div class="bg-gray-400 h-[50%] w-[80%] md:w-[40%] md:h-[60%] rounded-t-lg flex flex-col justify-between items-center p-4">
       <div class="flex flex-row gap-1 w-full">
         <div class="shadow bg-white w-[80%] rounded-lg flex justify-end items-center p-4">
         <!-- Visor -->
@@ -51,40 +51,20 @@
         <button onclick="ButtonTextClick('+')" type="button" class="shadow bg-gray-300 rounded p-2">+</button>
       </div>
     </div>
+    <div class=" bg-gray-700 text-white font-bold text-xl text-center justify-center border-b-2 border-gray-400 h-[5%] w-[80%] md:w-[40%] md:h-[5%]">Resultado: {{ .Result }}</div>
+    <div class=" flex flex-col pl-3 text-white font-bold bg-gray-700 h-[10%] w-[80%] md:w-[40%] md:h-[10%] rounded-b-lg overflow-y-auto max-h-[200px]">
+      {{ range $i, $o := .Operations }}
+      {{ $o.ID }} | {{ $o.Number1 }} {{ $o.Operator }} {{ $o.Number2 }} = {{ $o.Result}} | {{ $o.StringCreatedAt }} <br>
+      {{ end }}
+    </div>
   </form>
 <!-- Para renderizar a lista de operações: -->
-  {{ range $i, $o := .Operations }}
-	{{ $o.ID }} | {{ $o.Number1 }} {{ $o.Operator }} {{ $o.Number2 }} = {{ $o.Result}} | {{ $o.StringCreatedAt }} <br>
-  {{ end }}
-
-  <br><br>
 <!-- Para renderizar o resultado da última operação: -->
-  {{ .Result }}
   </body>
 
     <script>
-        const visor = document.getElementById('visor');
-        const errorMessage = document.getElementById('error-message');
-
-      <!-- function PostResult() { -->
-      <!--   event.preventDefault(); -->
-      <!--   if (CheckVisor(visor.value)) {; -->
-      <!--     if (visor.value.includes('.')) { -->
-      <!--       const decimalPlaces = visor.value.split('.')[1].length; -->
-      <!--       visor.value = eval(visor.value).toFixed(decimalPlaces); -->
-      <!--       document.forms[0].submit(); -->
-			<!-- console.log("teste" + visor.value) -->
-
-      <!--     } else { -->
-      <!--       visor.value = eval(visor.value); -->
-      <!--       document.forms[0].submit(); -->
-			<!-- console.log("teste" + visor.value) -->
-      <!--     } -->
-      <!--   const result = eval(visor.value); -->
-      <!--   visor.value = result; -->
-		<!-- console.log("teste") -->
-      <!--   } -->
-      <!-- } -->  
+      const visor = document.getElementById('visor');
+      const errorMessage = document.getElementById('error-message');
 
       function ButtonTextClick(char) {
         visor.value += char;
@@ -96,41 +76,41 @@
       }
 
       function CheckVisor(value) {
-  const errorMessage = document.getElementById('error-message');
-  const operators = ['+', '-', '*', '/'];
+        const errorMessage = document.getElementById('error-message');
+        const operators = ['+', '-', '*', '/'];
 
-  if (!/^[0-9+\-*/.]*$/.test(value)) {
-    errorMessage.style.display = 'block';
-    return false;
-  }
+        if (!/^[0-9+\-*/.]*$/.test(value)) {
+          errorMessage.style.display = 'block';
+          return false;
+        }
 
-  for (let i = 0; i < operators.length; i++) {
-    const operator = operators[i];
-    const pattern = new RegExp(`\\${operator}{2,}`);
-    if (pattern.test(value)) {
-      errorMessage.style.display = 'block';
-      return false;
-    }
-  }
+        for (let i = 0; i < operators.length; i++) {
+          const operator = operators[i];
+          const pattern = new RegExp(`\\${operator}{2,}`);
+          if (pattern.test(value)) {
+            errorMessage.style.display = 'block';
+            return false;
+          }
+        }
 
-  if (/^[+\-*/.]|[+\-*/.]$/.test(value)) {
-    errorMessage.style.display = 'block';
-    return false;
-  }
+        if (/^[+\-*/.]|[+\-*/.]$/.test(value)) {
+          errorMessage.style.display = 'block';
+          return false;
+        }
 
-  if (/[+\-*/.][.]/.test(value) || /[.][+\-*/.]/.test(value)) {
-    errorMessage.style.display = 'block';
-    return false;
-  }
+        if (/[+\-*/.][.]/.test(value) || /[.][+\-*/.]/.test(value)) {
+          errorMessage.style.display = 'block';
+          return false;
+        }
 
-  if (/[.][.]/.test(value) || value.split('.').length > 3) {
-    errorMessage.style.display = 'block';
-    return false;
-  }
+        if (/[.][.]/.test(value) || value.split('.').length > 3) {
+          errorMessage.style.display = 'block';
+          return false;
+        }
 
-  errorMessage.style.display = 'none';
-  return true;
-}
+        errorMessage.style.display = 'none';
+        return true;
+      }
 
     </script>
 </html>
