@@ -31,7 +31,7 @@ func (c *Controller) CreateOperation(w http.ResponseWriter, r *http.Request){
 			Result string
 			Operations []domain.Operation
 		} { 
-			Result: "---",
+			Result: "",
 			Operations: operations,
 		})
 	} 
